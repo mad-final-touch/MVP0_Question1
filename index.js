@@ -12,18 +12,21 @@ class MainScene extends Phaser.Scene {
 
     create() {
         let river=River(this,{
-            width:600,
+            width:1000,
             height:200,
-            x:50,
+            x:0,
             y:200,
-            velocity:1,
+            velocity:0.7,
             observer_velocity:0,
-            zoom:0.5
+            zoom:0.6
         });
-        console.log(river.getVelocity());
+        document.getElementById("toggle").onclick =river.toggle_play;
         Boat(this,{
             river_velocity:river.getVelocity(),
-            boat_velocity:0
+            boat_velocity:0,
+            x:100,
+            y:200,
+            zoom:0.5
         });
         river.draw_ending_pilors()
     }

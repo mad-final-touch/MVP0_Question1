@@ -1,13 +1,12 @@
-import River from "./river";
+import River from "./river_MVP1";
 
 function Boat(scene,options){
-        let{river_velocity,zoom }=options;
+        let{x,y,river_velocity,zoom,boat_velocity }=options;
         let graphics = scene.add.graphics();
 
         // Set fill and line style
         graphics.fillStyle(0x8B4513, 1); // Brown color for boat body
         graphics.lineStyle(2, 0x000000, 1); // Black outline
-
         // Draw the boat body (trapezoidal shape)
         graphics.beginPath();
         graphics.moveTo(100, 300);  // Bottom-left
@@ -49,23 +48,14 @@ function Boat(scene,options){
             graphics.lineTo(200, segmentEnd);
             graphics.strokePath();
         }
-
         // Convert to texture for reusability
         graphics.generateTexture('boat', 300, 400);
         graphics.destroy();
 
-        // Add boat sprite
-        // scene.add.sprite(200, 300, 'boat');
-        // scene.tweens.add({
-        //     targets: scene.add.sprite(10,300,'boat'),
-        //     x:1500,
-        //     duration:(1500/river_velocity)*1000,
-        //     ease:'Linear',
-        //     repeat:-1
-        // });
-        scene.boat=scene.physics.add.sprite(100,300,'boat');
+        scene.boat=scene.physics.add.sprite(x,y,'boat');
         // console.log(boat);
-        scene.boat.setVelocity(river_velocity,0);
+        scene.boat.setVelocity(river_velocity+boat_velocity,0);
+        scene.boat.setScale(zoom);
     }
 
 export default Boat;

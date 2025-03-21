@@ -6,7 +6,8 @@ function River(scene,options) {
         y,
         velocity,
         observer_velocity,
-        zoom
+        zoom,
+        paused
     } = options;
     const gap =100;
     const line_space_ratio=50;
@@ -66,10 +67,20 @@ function River(scene,options) {
             0, 1          // Alpha for bottom (0-1)
         );
         graphics.fillRect(x+width-gap*zoom, y, gap*zoom, height);
-    }
+    };
     function getVelocity(){
         return gap*zoom*(velocity-observer_velocity);
+    };
+    function toggle_play(){
+        console.log(paused);
+        if(!paused){
+            scene.tweens.pauseAll();
+            paused=true;
+        }else{
+            scene.tweens.resumeAll();
+            paused=false;
+        }
     }
-    return {draw_ending_pilors,getVelocity};
+    return {draw_ending_pilors,getVelocity,toggle_play};
 }
 export default River;
