@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import River from './river';
+import River from './river_MVP1';
 import Boat from './boat';
 class MainScene extends Phaser.Scene {
     constructor() {
@@ -11,20 +11,21 @@ class MainScene extends Phaser.Scene {
     }
 
     create() {
-        let vel_fun=River(this,{
-            width:1500,
-            height:300,
-            x:10,
+        let river=River(this,{
+            width:600,
+            height:200,
+            x:50,
             y:200,
-            velocity:-1,
+            velocity:1,
             observer_velocity:0,
-            zoom:0.75
+            zoom:0.5
         });
-        console.log(vel_fun());
+        console.log(river.getVelocity());
         Boat(this,{
-            river_velocity:vel_fun(),
-            boat_velocity:100
+            river_velocity:river.getVelocity(),
+            boat_velocity:0
         });
+        river.draw_ending_pilors()
     }
 
     update() {

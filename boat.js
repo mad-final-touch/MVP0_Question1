@@ -1,7 +1,7 @@
 import River from "./river";
 
 function Boat(scene,options){
-        let{river_velocity}=options;
+        let{river_velocity,zoom }=options;
         let graphics = scene.add.graphics();
 
         // Set fill and line style
@@ -35,6 +35,21 @@ function Boat(scene,options){
         graphics.fillPath();
         graphics.strokePath();
 
+        // Draw dashed line manually
+        graphics.lineStyle(2, 0xffffff, 1);
+        let startY = 150;
+        let endY = -150;
+        let dashLength = 10;
+        let gapLength = 5;
+        
+        for (let y = startY; y > endY; y -= (dashLength + gapLength)) {
+            let segmentEnd = Math.max(y - dashLength, endY);
+            graphics.beginPath();
+            graphics.moveTo(200, y);
+            graphics.lineTo(200, segmentEnd);
+            graphics.strokePath();
+        }
+
         // Convert to texture for reusability
         graphics.generateTexture('boat', 300, 400);
         graphics.destroy();
@@ -50,7 +65,7 @@ function Boat(scene,options){
         // });
         scene.boat=scene.physics.add.sprite(100,300,'boat');
         // console.log(boat);
-        scene.boat.setVelocity(100,0);
+        scene.boat.setVelocity(river_velocity,0);
     }
 
 export default Boat;
